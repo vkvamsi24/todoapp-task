@@ -21,8 +21,8 @@ import styles from "./task.module.css";
 import Tooltip from "@mui/material/Tooltip";
 
 export function Task() {
-  const [todoname, settodoname] = useState(null);
-  const [tododesc, settododesc] = useState(null);
+  const [todoname, settodoname] = useState("");
+  const [tododesc, settododesc] = useState("");
   const [todos, settodos] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [taskid, setid] = useState(0);
@@ -48,6 +48,12 @@ export function Task() {
 
       console.log(todos);
     }
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+    settodoname("");
+    settododesc("");
   };
 
   const shiftItemUp = (i) => () => {
@@ -158,7 +164,7 @@ export function Task() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
             <Button onClick={handleClose}>Add </Button>
           </DialogActions>
         </Dialog>
