@@ -25,30 +25,44 @@ export function Task() {
   const [tododesc, settododesc] = useState("");
   const [todos, settodos] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [update, setupdate] = useState(-1);
   const [taskid, setid] = useState(0);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (index) => () => {
     setOpen(true);
+    console.log(index);
+    setupdate(index);
   };
 
   const handleClose = () => {
     setOpen(false);
     console.log(todoname);
     console.log(tododesc);
-    setid(taskid + 1);
     // eslint-disable-next-line
-    if (todoname.length != 0 || tododesc != 0) {
-      var obj = {
-        id: taskid,
-        taskname: todoname,
-        taskdesc: tododesc,
-      };
+    if (update == -1) {
+      setid(taskid + 1);
+      // eslint-disable-next-line
+      if (todoname.length != 0 || tododesc != 0) {
+        var obj = {
+          id: taskid,
+          taskname: todoname,
+          taskdesc: tododesc,
+        };
 
-      settodos((current) => [...current, obj]);
+        settodos((current) => [...current, obj]);
+        settodoname("");
+        settododesc("");
+
+        console.log(todos);
+      }
+    } else {
+      var newtodos = [...todos];
+      newtodos[update].taskname = todoname;
+      newtodos[update].taskdesc = tododesc;
+      settodos(newtodos);
       settodoname("");
       settododesc("");
-
-      console.log(todos);
+      setupdate(-1);
     }
   };
 
@@ -56,6 +70,7 @@ export function Task() {
     setOpen(false);
     settodoname("");
     settododesc("");
+    setupdate(-1);
   };
 
   const shiftItemUp = (i) => () => {
@@ -124,7 +139,7 @@ export function Task() {
                     </ListItemIcon>
                     <ListItemIcon>
                       <Tooltip title="Update Todo">
-                        <RestorePageIcon />
+                        <RestorePageIcon onClick={handleClickOpen(index)} />
                       </Tooltip>
                     </ListItemIcon>
                     <ListItemText
@@ -138,7 +153,7 @@ export function Task() {
           </List>
         </Box>
         <Dialog open={open} onClose={handleCancel}>
-          <DialogTitle>New-todo</DialogTitle>
+          <DialogTitle>Add-todo</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
@@ -172,7 +187,7 @@ export function Task() {
         </Dialog>
       </div>
       <div className={styles.row}>
-        <button className={styles.button} onClick={handleClickOpen}>
+        <button className={styles.button} onClick={handleClickOpen(-1)}>
           New Todo
         </button>
       </div>
