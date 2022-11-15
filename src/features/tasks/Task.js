@@ -36,6 +36,7 @@ export function Task() {
     console.log(todoname);
     console.log(tododesc);
     setid(taskid + 1);
+    // eslint-disable-next-line
     if (todoname.length != 0 || tododesc != 0) {
       var obj = {
         id: taskid,
