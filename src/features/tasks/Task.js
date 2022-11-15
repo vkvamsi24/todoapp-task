@@ -45,6 +45,8 @@ export function Task() {
       };
 
       settodos((current) => [...current, obj]);
+      settodoname("");
+      settododesc("");
 
       console.log(todos);
     }
@@ -135,7 +137,7 @@ export function Task() {
             })}
           </List>
         </Box>
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleCancel}>
           <DialogTitle>New-todo</DialogTitle>
           <DialogContent>
             <TextField
